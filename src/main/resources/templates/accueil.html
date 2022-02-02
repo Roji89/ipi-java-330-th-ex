@@ -3,6 +3,8 @@
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <title>Gestion des employé</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome.css">
     <link rel="stylesheet" href="../static/static/bootstrap.min.css">
     <link rel="stylesheet" href="../static/static/font-awesome.css">
 </head>
@@ -17,7 +19,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li><a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortProperty=matricule&amp;sortDirection=ASC" class="nav-link">Liste des employés <span th:text="${number}" class="badge badge-primary">2499</span></a></li>
+                <li><a href="http://localhost:8080/employes?page=0&amp;size=10&amp;sortProperty=matricule&amp;sortDirection=ASC" class="nav-link">Liste des employés <span th:text="${number}" class="badge badge-primary">[[${number}]]</span></a></li>
             </ul>
 
             <form class="form-inline my-2 my-lg-0" role="search" action="http://localhost:8080/employes" method="GET">

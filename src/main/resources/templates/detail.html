@@ -3,6 +3,8 @@
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <title>Gestion des employés</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome.css">
     <link rel="stylesheet" href="../static/static/bootstrap.min.css">
     <link rel="stylesheet" href="../static/static/font-awesome.css">
 </head>
@@ -53,7 +55,7 @@
                         <span class="input-group-text">€</span>
                     </div>
                 </div>
-                <div>
+                <div th:if="${employe.id}">
                     <label class="form-control-label" for="nom">Prime Annuelle</label>
                     <div class="input-group">
                         <span type="text" th:text="${#numbers.formatCurrency(employe.primeAnnuelle)}" class="form-control" name="primeAnnuelle" id="primeAnnuelle"></span>
@@ -63,7 +65,7 @@
                     </div>
                 </div>
                 <label class="form-control-label" for="nom">Date d'embauche</label>
-                <input type="text" th:value="${#temporals.format(employe.dateEmbauche, 'dd/MM/yyyy')}" class="form-control" name="dateEmbauche" id="dateEmbauche">
+                <input type="text" th:value="${employe.dateEmbauche}" class="form-control" name="dateEmbauche" id="dateEmbauche">
             </div>
         </div>
 
@@ -98,16 +100,21 @@
             </div>
         </div>
 
-        <div th:if="${employe.id != null and employe instanceof T(com.ipiecoles.java.java320.model.Manager)}" class="col-lg-6">
-            <label class="form-control-label">Equipe</label>
-            <ul class="list-group">
-                <li class="list-group-item" th:each="tech : ${employe.equipe}">
-                    <a th:href="'/employes/' + ${tech.id}">
-                        <span th:text="${tech.prenom}"></span> <span th:text="${tech.nom}"></span>
-                        <span class="badge badge-primary float-right" th:text="${tech.matricule}"></span>
-                    </a>
-                </li>
-            </ul>
+        <div class="col-lg-6" th:if="${employe instanceof T(com.ipiecoles.java.java320.model.Manager)}">
+            <label class="form-control-label" for="performance">Equipe</label>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-group" th:each="tech : ${employe.equipe}">
+                        <!--/*@thymesVar id="tech" type="com.ipiecoles.java.java320.model.Technicien"*/-->
+                        <li class="list-group-item">
+                            <a th:href="|/employes/${tech.id}|">
+                                <span th:text="${tech.prenom}">Mélissa</span> <span th:text="${tech.nom}">Rodriguez</span>
+                                <span class="badge badge-primary" th:text="${tech.matricule}">T00006</span></a>
+                            <a th:href="|/managers/${employe.id}/techniciens/${tech.id}/delete|" class="btn btn-sm btn-danger float-right"><i class="fa fa-remove"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
 <!--            <div class="col-lg-6">-->
@@ -150,12 +157,12 @@
         <!--                </div>-->
         <!--            </div>-->
         <!--        </div>-->
-        
 
-        
+
+
     </form>
-    
-    
+
+
     <div class="row mt-2">
         <div class="col-lg-6">
             <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer">
